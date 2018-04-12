@@ -55,5 +55,11 @@ You can also put some global configuration in the file.
     $ cd rsfs
     $ blade build -pdebug :rsfs_main
 
+The execuable file (rsfs_main) will be built by blade.
+Using the jump command, a, we can find the binary.
+
+    $ a
+    $ ls
+
 
 
