@@ -1,4 +1,4 @@
-import "sofa/pbrpc/rpc_option.proto";
+import "trident/rpc_option.proto";
 import "status_code.proto";
 
 package rsfs;
