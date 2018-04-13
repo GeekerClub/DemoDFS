@@ -3,30 +3,30 @@
 //
 // Description:
 
-#include "common/thread/this_thread.h"
+#include "toft/system/threading/this_thread.h"
 
 #include "rsfs/rsfs_entry.h"
 
 namespace rsfs {
 
-RsfsEntry::RsfsEntry()
+GunirEntry::GunirEntry()
     : m_started(false) {}
 
-RsfsEntry::~RsfsEntry() {}
+GunirEntry::~GunirEntry() {}
 
-bool RsfsEntry::Start() {
+bool GunirEntry::Start() {
     if (ShouldStart()) {
         return StartServer();
     }
     return false;
 }
 
-bool RsfsEntry::Run() {
-    ThisThread::Sleep(2000);
+bool GunirEntry::Run() {
+    toft::ThisThread::Sleep(2000);
     return true;
 }
 
-bool RsfsEntry::Shutdown() {
+bool GunirEntry::Shutdown() {
     if (ShouldShutdown()) {
         ShutdownServer();
         return true;
@@ -34,8 +34,8 @@ bool RsfsEntry::Shutdown() {
     return false;
 }
 
-bool RsfsEntry::ShouldStart() {
-    Mutex::Locker lock(&m_mutex);
+bool GunirEntry::ShouldStart() {
+    toft::Mutex::Locker lock(&m_mutex);
     if (m_started) {
         return false;
     }
@@ -43,8 +43,8 @@ bool RsfsEntry::ShouldStart() {
     return true;
 }
 
-bool RsfsEntry::ShouldShutdown() {
-    Mutex::Locker lock(&m_mutex);
+bool GunirEntry::ShouldShutdown() {
+    toft::Mutex::Locker lock(&m_mutex);
     if (!m_started) {
         return false;
     }

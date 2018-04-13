@@ -1,5 +1,5 @@
-import "status_code.proto"; 
-import "snode_info.proto";
+import "rsfs/proto/status_code.proto"; 
+import "rsfs/proto/snode_info.proto";
 
 package rsfs;
 

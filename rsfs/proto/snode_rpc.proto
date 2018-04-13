@@ -1,5 +1,5 @@
 import "trident/rpc_option.proto";
-import "status_code.proto";
+import "rsfs/proto/status_code.proto";
 
 package rsfs;
 

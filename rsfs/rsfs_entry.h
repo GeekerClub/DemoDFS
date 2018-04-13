@@ -3,17 +3,17 @@
 //
 // Description:
 
-#ifndef  RSFS_TERA_ENTRY_H
-#define  RSFS_TERA_ENTRY_H
+#ifndef  GUNIR_TERA_ENTRY_H
+#define  GUNIR_TERA_ENTRY_H
 
-#include "common/lock/mutex.h"
+#include "toft/system/threading/mutex.h"
 
 namespace rsfs {
 
-class RsfsEntry {
+class GunirEntry {
 public:
-    RsfsEntry();
-    virtual ~RsfsEntry();
+    GunirEntry();
+    virtual ~GunirEntry();
 
     virtual bool Start();
     virtual bool Run();
@@ -28,10 +28,10 @@ private:
     bool ShouldShutdown();
 
 private:
-    Mutex m_mutex;
+    toft::Mutex m_mutex;
     bool m_started;
 };
 
 }  // namespace rsfs
 
-#endif  // RSFS_TERA_ENTRY_H
+#endif  // GUNIR_TERA_ENTRY_H
