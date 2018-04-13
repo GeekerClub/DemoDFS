@@ -10,8 +10,8 @@
 
 #include <map>
 
-#include "common/file/file_stream.h"
-#include "common/lock/mutex.h"
+#include "toft/file/file_stream.h"
+#include "toft/system/threading/mutex.h"
 
 namespace rsfs {
 namespace snode {
@@ -34,7 +34,7 @@ public:
     int32_t GetRef() const;
 
 private:
-    mutable Mutex m_mutex;
+    mutable toft::RwLock m_mutex;
     FileStream* m_stream;
 
     Type m_type;
@@ -52,7 +52,7 @@ public:
     bool RemoveBlockStream(uint64_t block_id);
 
 private:
-    mutable Mutex m_mutex_list;
+    mutable toft::RwLock m_mutex_list;
     std::map<uint64_t, BlockStream*> m_block_io;
 };
 

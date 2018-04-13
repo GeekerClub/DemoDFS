@@ -6,8 +6,8 @@
 
 #include "rsfs/snode/block_manager.h"
 
-#include "common/base/string_number.h"
-#include "common/file/file_types.h"
+#include "toft/base/string_number.h"
+#include "toft/file/file_types.h"
 #include "thirdparty/glog/logging.h"
 
 DECLARE_string(rsfs_snode_path_prefix);

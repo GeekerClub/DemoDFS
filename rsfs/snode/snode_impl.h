@@ -6,8 +6,8 @@
 #ifndef RSFS_SNODE_SNODE_IMPL_H
 #define RSFS_SNODE_SNODE_IMPL_H
 
-#include "common/base/closure.h"
-#include "common/thread/thread_pool.h"
+#include "toft/base/closure.h"
+#include "toft/thread/thread_pool.h"
 
 #include "rsfs/master/master_client.h"
 #include "rsfs/proto/snode_info.pb.h"
@@ -68,8 +68,8 @@ private:
     uint64_t m_this_sequence_id;
 
     master::MasterClient* m_master_client;
-    scoped_ptr<BlockManager> m_block_manager;
-    scoped_ptr<ThreadPool> m_thread_pool;
+    toft::scoped_ptr<BlockManager> m_block_manager;
+    toft::scoped_ptr<ThreadPool> m_thread_pool;
 };
 
 } // namespace snode

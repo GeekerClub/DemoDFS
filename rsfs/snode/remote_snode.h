@@ -7,8 +7,8 @@
 #ifndef RSFS_SNODE_REMOTE_SNODE_H
 #define RSFS_SNODE_REMOTE_SNODE_H
 
-#include "common/base/scoped_ptr.h"
-#include "common/thread/thread_pool.h"
+#include "toft/base/scoped_ptr.h"
+#include "toft/thread/thread_pool.h"
 
 #include "rsfs/proto/snode_rpc.pb.h"
 
@@ -65,7 +65,7 @@ private:
 
 private:
     SNodeImpl* m_snode_impl;
-    scoped_ptr<ThreadPool> m_thread_pool;
+    toft::scoped_ptr<ThreadPool> m_thread_pool;
 };
 
 } // namespace snode

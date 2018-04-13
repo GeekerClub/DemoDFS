@@ -5,8 +5,8 @@
 
 #include "rsfs/snode/snode_entry.h"
 
-#include "common/net/ip_address.h"
-#include "common/thread/this_thread.h"
+#include "toft/net/ip_address.h"
+#include "toft/thread/this_thread.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 

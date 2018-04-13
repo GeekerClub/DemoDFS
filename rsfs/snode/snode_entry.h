@@ -8,7 +8,7 @@
 
 #include "bobby/bobby_server.h"
 
-#include "common/base/scoped_ptr.h"
+#include "toft/base/scoped_ptr.h"
 
 #include "rsfs/rsfs_entry.h"
 
@@ -33,10 +33,10 @@ public:
     void ShutdownServer();
 
 private:
-    scoped_ptr<SNodeImpl> m_snode_impl;
-    scoped_ptr<RemoteSNode> m_remote_snode;
-    scoped_ptr<master::MasterClient> m_master_client;
-    scoped_ptr<bobby::BobbyServer> m_bobby_server;
+    toft::scoped_ptr<SNodeImpl> m_snode_impl;
+    toft::scoped_ptr<RemoteSNode> m_remote_snode;
+    toft::scoped_ptr<master::MasterClient> m_master_client;
+    toft::scoped_ptr<bobby::BobbyServer> m_bobby_server;
 };
 
 } // namespace snode

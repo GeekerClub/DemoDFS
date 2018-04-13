@@ -7,8 +7,8 @@
 
 #include "rsfs/snode/snode_impl.h"
 
-#include "common/file/file_stream.h"
-#include "common/file/file_types.h"
+#include "toft/file/file_stream.h"
+#include "toft/file/file_types.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 
