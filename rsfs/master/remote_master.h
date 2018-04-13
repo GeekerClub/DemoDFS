@@ -1,4 +1,4 @@
-// Copyright (C) 2018, for GeekerClub authors..
+// Copyright (C) 2015, for GeekerClub authors.
 // Author: An Qin (anqin.qin@gmail.com)
 //
 // Description:
@@ -8,7 +8,7 @@
 #define RSFS_MASTER_REMOTE_MASTER_H
 
 #include "toft/base/scoped_ptr.h"
-#include "toft/thread/thread_pool.h"
+#include "toft/system/threading/thread_pool.h"
 
 #include "rsfs/proto/master_rpc.pb.h"
 
@@ -23,19 +23,20 @@ public:
     ~RemoteMaster();
 
     void OpenFile(google::protobuf::RpcController* controller,
-                  const OpenFileRequest* request,
-                  OpenFileResponse* response,
-                  google::protobuf::Closure* done);
+                   const OpenFileRequest* request,
+                   OpenFileResponse* response,
+                   google::protobuf::Closure* done);
 
     void CloseFile(google::protobuf::RpcController* controller,
-                   const CloseFileRequest* request,
-                   CloseFileResponse* response,
-                   google::protobuf::Closure* done);
+                      const CloseFileRequest* request,
+                      CloseFileResponse* response,
+                      google::protobuf::Closure* done);
 
     void ListFile(google::protobuf::RpcController* controller,
-                   const ListFileRequest* request,
-                   ListFileResponse* response,
-                   google::protobuf::Closure* done);
+                     const ListFileRequest* request,
+                     ListFileResponse* response,
+                     google::protobuf::Closure* done);
+
 
     void Register(google::protobuf::RpcController* controller,
                   const RegisterRequest* request,
@@ -54,14 +55,14 @@ private:
                     google::protobuf::Closure* done);
 
     void DoCloseFile(google::protobuf::RpcController* controller,
-                     const CloseFileRequest* request,
-                     CloseFileResponse* response,
-                     google::protobuf::Closure* done);
+                        const CloseFileRequest* request,
+                        CloseFileResponse* response,
+                        google::protobuf::Closure* done);
 
     void DoListFile(google::protobuf::RpcController* controller,
-                     const ListFileRequest* request,
-                     ListFileResponse* response,
-                     google::protobuf::Closure* done);
+                       const ListFileRequest* request,
+                       ListFileResponse* response,
+                       google::protobuf::Closure* done);
 
     void DoRegister(google::protobuf::RpcController* controller,
                     const RegisterRequest* request,
@@ -75,7 +76,7 @@ private:
 
 private:
     MasterImpl* m_master_impl;
-    toft::scoped_ptr<ThreadPool> m_thread_pool;
+    toft::scoped_ptr<toft::ThreadPool> m_thread_pool;
 };
 
 

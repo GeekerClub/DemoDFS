@@ -1,4 +1,4 @@
-// Copyright (C) 2018, for GeekerClub authors.
+// Copyright (C) 2015, for GeekerClub authors.
 // Author: An Qin (anqin.qin@gmail.com)
 //
 // Description:
@@ -7,42 +7,41 @@
 #ifndef RSFS_MASTER_MASTER_IMPL_H
 #define RSFS_MASTER_MASTER_IMPL_H
 
+#include "thirdparty/jsoncpp/json.h"
 #include "toft/base/scoped_ptr.h"
 #include "toft/system/threading/mutex.h"
 #include "toft/system/threading/rwlock.h"
-#include "toft/timer/timer_manager.h"
+#include "toft/system/threading/thread_pool.h"
+#include "toft/system/timer/timer_manager.h"
 
 #include "rsfs/proto/master_rpc.pb.h"
 
 namespace rsfs {
 namespace master {
 
-class NodeManager;
-class MetaTree;
-
 class MasterImpl {
 public:
     enum MasterStatus {
         kNotInited = kMasterNotInited,
         kIsBusy = kMasterIsBusy,
-        kIsRunning = kMasterIsRunning,
         kIsSecondary = kMasterIsSecondary,
         kIsReadonly = kMasterIsReadonly
     };
 
     MasterImpl();
-    ~MasterImpl();
+    virtual ~MasterImpl();
 
     bool Init();
 
     bool OpenFile(const OpenFileRequest* request,
-                  OpenFileResponse* response);
+                   OpenFileResponse* response);
 
     bool CloseFile(const CloseFileRequest* request,
-                   CloseFileResponse* response);
+                      CloseFileResponse* response);
 
     bool ListFile(const ListFileRequest* request,
-                  ListFileResponse* response);
+                     ListFileResponse* response);
+
 
     bool Report(const ReportRequest* request,
                 ReportResponse* response);
@@ -50,21 +49,19 @@ public:
     bool Register(const RegisterRequest* request,
                   RegisterResponse* response);
 
-private:
-    bool OpenFileForRead(const OpenFileRequest* request,
-                         OpenFileResponse* response);
-    bool OpenFileForWrite(const OpenFileRequest* request,
-                          OpenFileResponse* response);
+    bool GetJobJson(Json::Value* job_info_json);
+
+    void ResetCounters(uint64_t time_id);
+
 
 private:
-    mutable toft::RwLock m_status_mutex;
+    mutable toft::Mutex m_status_mutex;
     MasterStatus m_status;
 
     mutable toft::RwLock m_rwlock;
-    TimerManager m_timer_manager;
+    toft::TimerManager m_timer_manager;
 
-    toft::scoped_ptr<NodeManager> m_node_manager;
-    toft::scoped_ptr<MetaTree> m_meta_tree;
+    toft::scoped_ptr<toft::ThreadPool> m_thread_pool;
 };
 
 

@@ -18,7 +18,7 @@ NodeManager::~NodeManager() {}
 
 bool NodeManager::Register(const RegisterRequest* request,
                            RegisterResponse* response) {
-    RWLock::WriterLocker locker(&m_rwlock);
+    toft::RwLock::WriterLocker locker(&m_rwlock);
     std::map<std::string, NodeState*>::iterator it =
         m_node_list.find(request->snode_info().addr());
     if (it != m_node_list.end()) {
@@ -39,7 +39,7 @@ bool NodeManager::Report(const ReportRequest* request,
                          ReportResponse* response) {
     NodeState* node_state = NULL;
     {
-        RWLock::ReaderLocker locker(m_rwlock);
+        toft::RwLock::ReaderLocker locker(&m_rwlock);
         std::map<std::string, NodeState*>::iterator it =
             m_node_list.find(request->snode_info().addr());
         if (it == m_node_list.end()) {
@@ -59,7 +59,7 @@ bool NodeManager::Report(const ReportRequest* request,
 }
 
 bool NodeManager::AllocNode(uint32_t num, SNodeInfoList* node_list) {
-    RWLock::WriterLocker locker(&m_rwlock);
+    toft::RwLock::WriterLocker locker(&m_rwlock);
     std::map<std::string, NodeState*>::iterator it =
         m_node_list.begin();
     uint32_t try_count = 0;
