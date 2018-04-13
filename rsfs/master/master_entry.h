@@ -8,7 +8,7 @@
 
 #include "bobby/bobby_server.h"
 
-#include "common/base/scoped_ptr.h"
+#include "toft/base/scoped_ptr.h"
 #include "rsfs/rsfs_entry.h"
 
 namespace rsfs {
@@ -29,10 +29,10 @@ private:
     bool InitZKAdaptor();
 
 private:
-    scoped_ptr<MasterImpl> m_master_impl;
-    //scoped_ptr<RemoteMaster> m_remote_master;
+    toft::scoped_ptr<MasterImpl> m_master_impl;
+    //toft::scoped_ptr<RemoteMaster> m_remote_master;
     RemoteMaster* m_remote_master;
-    scoped_ptr<bobby::BobbyServer> m_bobby_server;
+    toft::scoped_ptr<bobby::BobbyServer> m_bobby_server;
 };
 
 } // namespace master

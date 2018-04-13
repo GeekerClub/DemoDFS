@@ -7,10 +7,10 @@
 #ifndef RSFS_MASTER_MASTER_IMPL_H
 #define RSFS_MASTER_MASTER_IMPL_H
 
-#include "common/base/scoped_ptr.h"
-#include "common/lock/mutex.h"
-#include "common/lock/rwlock.h"
-#include "common/timer/timer_manager.h"
+#include "toft/base/scoped_ptr.h"
+#include "toft/system/threading/mutex.h"
+#include "toft/system/threading/rwlock.h"
+#include "toft/timer/timer_manager.h"
 
 #include "rsfs/proto/master_rpc.pb.h"
 
@@ -57,14 +57,14 @@ private:
                           OpenFileResponse* response);
 
 private:
-    mutable Mutex m_status_mutex;
+    mutable toft::RwLock m_status_mutex;
     MasterStatus m_status;
 
-    mutable RWLock m_rwlock;
+    mutable toft::RwLock m_rwlock;
     TimerManager m_timer_manager;
 
-    scoped_ptr<NodeManager> m_node_manager;
-    scoped_ptr<MetaTree> m_meta_tree;
+    toft::scoped_ptr<NodeManager> m_node_manager;
+    toft::scoped_ptr<MetaTree> m_meta_tree;
 };
 
 

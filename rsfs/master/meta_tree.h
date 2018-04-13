@@ -16,6 +16,8 @@
 #include "rsfs/proto/proto_helper.h"
 #include "rsfs/proto/status_code.pb.h"
 
+#include "thirdparty/leveldb/db.h"
+
 namespace rsfs {
 namespace master {
 

@@ -11,7 +11,7 @@
 #include <map>
 #include <string>
 
-#include "common/lock/rwlock.h"
+#include "toft/system/threading/rwlock.h"
 
 #include "rsfs/proto/proto_helper.h"
 #include "rsfs/proto/master_rpc.pb.h"
@@ -35,7 +35,7 @@ public:
     bool AllocNode(uint32_t num, SNodeInfoList* node_list);
 
 private:
-    mutable RWLock m_rwlock;
+    mutable toft::RwLock m_rwlock;
     std::map<std::string, NodeState*> m_node_list;
 };
 

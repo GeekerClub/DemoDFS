@@ -7,8 +7,8 @@
 #ifndef RSFS_MASTER_REMOTE_MASTER_H
 #define RSFS_MASTER_REMOTE_MASTER_H
 
-#include "common/base/scoped_ptr.h"
-#include "common/thread/thread_pool.h"
+#include "toft/base/scoped_ptr.h"
+#include "toft/thread/thread_pool.h"
 
 #include "rsfs/proto/master_rpc.pb.h"
 
@@ -75,7 +75,7 @@ private:
 
 private:
     MasterImpl* m_master_impl;
-    scoped_ptr<ThreadPool> m_thread_pool;
+    toft::scoped_ptr<ThreadPool> m_thread_pool;
 };
 
 

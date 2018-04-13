@@ -5,7 +5,7 @@
 
 #include "rsfs/master/remote_master.h"
 
-#include "common/base/closure.h"
+#include "toft/base/closure.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 

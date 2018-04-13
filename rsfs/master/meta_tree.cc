@@ -6,13 +6,14 @@
 
 #include "rsfs/master/meta_tree.h"
 
-#include "common/base/string_ext.h"
+// #include "toft/base/string_ext.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 
 #include "rsfs/master/node_manager.h"
 #include "rsfs/proto/proto_helper.h"
 #include "rsfs/utils/atomic.h"
+#include "rsfs/utils/string_ext.h"
 
 DECLARE_string(rsfs_master_db_path);
 DECLARE_string(rsfs_master_dirmeta_path);
@@ -203,7 +204,7 @@ bool MetaTree::SplitTablePath(const std::string& full_path,
         split_cnt--;
         std::string tmp_dir;
         std::string tmp_file;
-        SplitStringEnd(my_dir, &tmp_dir, &tmp_file, "/");
+        utils::SplitStringEnd(my_dir, &tmp_dir, &tmp_file, "/");
         VLOG(5) << "my_dir: " << my_dir
             << ", tmp_dir: " << tmp_dir
             << ", tmp_file: " << tmp_file
