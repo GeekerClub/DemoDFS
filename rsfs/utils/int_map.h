@@ -9,8 +9,8 @@
 
 #include <vector>
 
-#include "common/base/stdint.h"
-#include "common/lock/rwlock.h"
+#include "toft/base/stdint.h"
+#include "toft/system/threading/rwlock.h"
 
 namespace rsfs {
 namespace utils {
@@ -29,7 +29,7 @@ public:
     uint32_t Sum(int32_t value) const;
 
 private:
-    mutable RWLock m_rwlock;
+    mutable toft::RwLock m_rwlock;
     std::vector<int32_t> m_map_values;
     uint32_t m_set_count;
     int32_t m_default_value;

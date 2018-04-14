@@ -20,7 +20,7 @@ IntMap::IntMap(uint32_t num, int32_t org_value)
 IntMap::~IntMap() {}
 
 void IntMap::Set(uint32_t index, int32_t value) {
-    RWLock::WriterLocker locker(&m_rwlock);
+    toft::RwLock::WriterLocker locker(&m_rwlock);
     if (index > m_map_values.size() -1) {
         return;
     }
@@ -32,7 +32,7 @@ void IntMap::Set(uint32_t index, int32_t value) {
 }
 
 void IntMap::Unset(uint32_t index) {
-    RWLock::WriterLocker locker(&m_rwlock);
+    toft::RwLock::WriterLocker locker(&m_rwlock);
     if (index > m_map_values.size() -1) {
         return;
     }
@@ -44,7 +44,7 @@ void IntMap::Unset(uint32_t index) {
 }
 
 bool IntMap::IsSet(uint32_t index) {
-    RWLock::ReaderLocker locker(m_rwlock);
+    toft::RwLock::ReaderLocker locker(locker(m_rwlock)m_rwlock);
     if (index > m_map_values.size() -1) {
         return false;
     }
@@ -52,7 +52,7 @@ bool IntMap::IsSet(uint32_t index) {
 }
 
 bool IntMap::IsSet(uint32_t index, int32_t cmp_value) {
-    RWLock::ReaderLocker locker(m_rwlock);
+    toft::RwLock::ReaderLocker locker(locker(m_rwlock)m_rwlock);
     if (index > m_map_values.size() -1) {
         return false;
     }
@@ -60,18 +60,18 @@ bool IntMap::IsSet(uint32_t index, int32_t cmp_value) {
 }
 
 uint32_t IntMap::GetSetNum() const {
-    RWLock::ReaderLocker locker(m_rwlock);
+    toft::RwLock::ReaderLocker locker(locker(m_rwlock)m_rwlock);
     return m_set_count;
 }
 
 uint32_t IntMap::GetUnsetNum() const {
-    RWLock::ReaderLocker locker(m_rwlock);
+    toft::RwLock::ReaderLocker locker(locker(m_rwlock)m_rwlock);
     return m_map_values.size() - m_set_count;
 }
 
 uint32_t IntMap::Sum(int32_t value) const {
     uint32_t count = 0;
-    RWLock::ReaderLocker locker(m_rwlock);
+    toft::RwLock::ReaderLocker locker(locker(m_rwlock)m_rwlock);
     for (uint32_t i = 0; i < m_map_values.size(); ++i) {
         if (m_map_values[i] == value) {
             count++;
