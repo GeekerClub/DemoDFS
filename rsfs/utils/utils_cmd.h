@@ -35,6 +35,7 @@ std::string GetMd5(const char* buf, uint32_t buf_size);
 
 std::string TruncateString(const std::string& str, uint32_t width);
 
+
 } // namespace utils
 } // namespace rsfs
 

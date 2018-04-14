@@ -10,11 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "common/base/scoped_ptr.h"
-#include "common/base/string_ext.h"
-#include "common/base/string_format.h"
-#include "common/base/string_number.h"
-#include "common/file/file_path.h"
+#include "toft/base/string/string_format.h"
+#include "toft/storage/path/path_ext.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 
@@ -25,13 +22,15 @@ DECLARE_string(log_dir);
 namespace rsfs {
 namespace utils {
 
+const int32_t kMaxHostNameSize = 1024;
+
 std::string GetBinaryLocationDir() {
     char exec_full_path[1024] = {'\0'};
     readlink ("/proc/self/exe", exec_full_path, 1024);
     VLOG(5) << "current binary location: " << exec_full_path;
 
     std::string full_dir;
-    SplitStringPath(exec_full_path, &full_dir, NULL);
+    toft::SplitStringPath(exec_full_path, &full_dir, NULL);
     return full_dir;
 }
 
@@ -92,9 +91,9 @@ std::string ConvertByteToString(const uint64_t size) {
     }
 
     if ((int)min_size - min_size == 0) {
-        return StringFormat("%d%s", (int)min_size, hight_unit.c_str());
+        return toft::StringFormat("%d%s", (int)min_size, hight_unit.c_str());
     } else {
-        return StringFormat("%.2f%s", min_size, hight_unit.c_str());
+        return toft::StringFormat("%.2f%s", min_size, hight_unit.c_str());
     }
 }
 
