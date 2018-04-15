@@ -1,77 +1,75 @@
 // Copyright (C) 2018, for GeekerClub authors.
-// Author: An Qin (anqin.qin@gmail.com)
+// Author: An Qin (qinan@baidu.com)
 //
 // Description:
 //
 
 #include "rsfs/snode/snode_client.h"
 
-DECLARE_string(rsfs_snode_addr);
-DECLARE_string(rsfs_snode_port);
-DECLARE_int32(rsfs_snode_connect_retry_times);
-DECLARE_int32(rsfs_snode_connect_retry_period);
-DECLARE_int32(rsfs_snode_connect_timeout_period);
-
 namespace rsfs {
 namespace snode {
 
+toft::ThreadPool* SNodeClient::m_thread_pool = NULL;
 
-SNodeClient::SNodeClient()
-    : RpcClient<SNodeServer::Stub>(
-                FLAGS_rsfs_snode_addr + ":" + FLAGS_rsfs_snode_port,
-                FLAGS_rsfs_snode_connect_retry_period,
-                FLAGS_rsfs_snode_connect_timeout_period,
-                FLAGS_rsfs_snode_connect_retry_times) {}
+void SNodeClient::SetThreadPool(toft::ThreadPool* thread_pool) {
+    m_thread_pool = thread_pool;
+}
 
-SNodeClient::SNodeClient(int32_t wait_time, int32_t rpc_timeout,
-                                   int32_t retry_times)
-    : RpcClient<SNodeServer::Stub>(
-            FLAGS_rsfs_snode_addr + ":" + FLAGS_rsfs_snode_port,
-            wait_time, rpc_timeout, retry_times) {}
+void SNodeClient::SetRpcOption(int32_t max_inflow, int32_t max_outflow,
+                                int32_t pending_buffer_size, int32_t thread_num) {
+    RpcClientBase::SetOption(max_inflow, max_outflow,
+                             pending_buffer_size, thread_num);
+}
 
+SNodeClient::SNodeClient(const std::string& server_addr,
+                           int32_t rpc_timeout)
+    : RpcClient<SNodeServer::Stub>(server_addr),
+      m_rpc_timeout(rpc_timeout) {}
 
 SNodeClient::~SNodeClient() {}
 
-void SNodeClient::ResetSNodeClient(const std::string& server_addr) {
-    ResetClient(server_addr);
-}
-
 bool SNodeClient::OpenData(const OpenDataRequest* request,
-                           OpenDataResponse* response) {
+                                   OpenDataResponse* response,
+                                   toft::Closure<void (OpenDataRequest*,
+                                                       OpenDataResponse*, bool, int)>* done) {
     return SendMessageWithRetry(&SNodeServer::Stub::OpenData,
-                                request, response,
-                                (google::protobuf::Closure*)NULL,
-                                "OpenData");
+                                request, response, done, "OpenData",
+                                m_rpc_timeout, m_thread_pool);
 }
 
 bool SNodeClient::CloseData(const CloseDataRequest* request,
-                           CloseDataResponse* response) {
+                                      CloseDataResponse* response,
+                                      toft::Closure<void (CloseDataRequest*,
+                                                          CloseDataResponse*,
+                                                          bool, int)>* done) {
     return SendMessageWithRetry(&SNodeServer::Stub::CloseData,
-                                request, response,
-                                (google::protobuf::Closure*)NULL,
-                                "CloseData");
+                                request, response, done, "CloseData",
+                                m_rpc_timeout, m_thread_pool);
 }
 
 bool SNodeClient::WriteData(const WriteDataRequest* request,
-                            WriteDataResponse* response) {
+                                      WriteDataResponse* response,
+                                      toft::Closure<void (WriteDataRequest*,
+                                                          WriteDataResponse*,
+                                                          bool, int)>* done) {
     return SendMessageWithRetry(&SNodeServer::Stub::WriteData,
-                                request, response,
-                                (google::protobuf::Closure*)NULL,
-                                "WriteData");
+                                request, response, done, "WriteData",
+                                m_rpc_timeout, m_thread_pool);
 }
 
 bool SNodeClient::ReadData(const ReadDataRequest* request,
-                            ReadDataResponse* response) {
+                                      ReadDataResponse* response,
+                                      toft::Closure<void (ReadDataRequest*,
+                                                          ReadDataResponse*,
+                                                          bool, int)>* done) {
     return SendMessageWithRetry(&SNodeServer::Stub::ReadData,
-                                request, response,
-                                (google::protobuf::Closure*)NULL,
-                                "ReadData");
+                                request, response, done, "ReadData",
+                                m_rpc_timeout, m_thread_pool);
 }
 
 bool SNodeClient::IsRetryStatus(const StatusCode& status) {
     return (status == kSNodeNotInited
-            || status == kSNodeIsBusy
-            || status == kSNodeIsIniting);
+            || status == kSNodeIsBusy);
 }
 
 } // namespace snode
