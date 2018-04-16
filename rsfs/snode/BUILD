@@ -28,3 +28,14 @@ cc_library(
         '//rsfs/proto:snode_rpc_proto'
     ]
 )
+
+cc_library(
+    name = 'snode_entry',
+    srcs = 'snode_entry.cc',
+    deps = [
+        ':snode_impl',
+        '//rsfs/utils:memory_tool',
+        '//rsfs/utils:utils_cmd',
+        '//rsfs:rsfs_entry',
+    ]
+)

@@ -17,3 +17,12 @@ cc_library(
         '//toft/base/string:string',
     ]
 )
+
+cc_library(
+    name = 'memory_tool',
+    srcs = 'memory_tool.cc',
+    deps = [
+        '//rsfs:rsfs_flags',
+        '//thirdparty/gperftools-2.0/src:tcmalloc'
+    ]
+)

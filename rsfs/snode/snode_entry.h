@@ -1,4 +1,4 @@
-// Copyright (C) 2018, for GeekerClub authors..
+// Copyright (C) 2018, for GeekerClub authors.
 // Author: An Qin (anqin.qin@gmail.com)
 //
 // Description:
@@ -6,37 +6,35 @@
 #ifndef RSFS_SNODE_SNODE_ENTRY_H
 #define RSFS_SNODE_SNODE_ENTRY_H
 
-#include "bobby/bobby_server.h"
 
 #include "toft/base/scoped_ptr.h"
 
 #include "rsfs/rsfs_entry.h"
+#include "rsfs/rpc_server.h"
 
 namespace rsfs {
-
-namespace master {
-class MasterClient;
-}
-
 namespace snode {
 
 class SNodeImpl;
 class RemoteSNode;
 
-class SNodeEntry : public RsfsEntry {
+class SNodeEntry : public GunirEntry {
 public:
     SNodeEntry();
     ~SNodeEntry();
 
     bool StartServer();
-    bool Run();
     void ShutdownServer();
+    bool Run();
+
+// protected:
+//     bool StartMonitor(const IpAddress& addr);
+//     void ShutdownMonitor();
 
 private:
     toft::scoped_ptr<SNodeImpl> m_snode_impl;
-    toft::scoped_ptr<RemoteSNode> m_remote_snode;
-    toft::scoped_ptr<master::MasterClient> m_master_client;
-    toft::scoped_ptr<bobby::BobbyServer> m_bobby_server;
+    RemoteSNode* m_remote_snode;
+    toft::scoped_ptr<RpcServer> m_rpc_server;
 };
 
 } // namespace snode
