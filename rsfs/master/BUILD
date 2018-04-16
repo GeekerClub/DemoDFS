@@ -58,3 +58,14 @@ cc_library(
         '//rsfs:rpc_server'
     ]
 )
+
+cc_library(
+    name = 'master_entry',
+    srcs = 'master_entry.cc',
+    deps = [
+        ':master_impl',
+        '//rsfs/utils:memory_tool',
+        '//rsfs/utils:utils_cmd',
+        '//rsfs:rsfs_entry',
+    ]
+)

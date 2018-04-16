@@ -6,10 +6,11 @@
 #ifndef RSFS_MASTER_MASTER_ENTRY_H
 #define RSFS_MASTER_MASTER_ENTRY_H
 
-#include "bobby/bobby_server.h"
 
 #include "toft/base/scoped_ptr.h"
+
 #include "rsfs/rsfs_entry.h"
+#include "rsfs/rpc_server.h"
 
 namespace rsfs {
 namespace master {
@@ -25,14 +26,11 @@ public:
     bool StartServer();
     void ShutdownServer();
 
-private:
-    bool InitZKAdaptor();
 
 private:
     toft::scoped_ptr<MasterImpl> m_master_impl;
-    //toft::scoped_ptr<RemoteMaster> m_remote_master;
     RemoteMaster* m_remote_master;
-    toft::scoped_ptr<bobby::BobbyServer> m_bobby_server;
+    toft::scoped_ptr<RpcServer> m_rpc_server;
 };
 
 } // namespace master
