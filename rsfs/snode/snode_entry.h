@@ -18,7 +18,7 @@ namespace snode {
 class SNodeImpl;
 class RemoteSNode;
 
-class SNodeEntry : public GunirEntry {
+class SNodeEntry : public RsfsEntry {
 public:
     SNodeEntry();
     ~SNodeEntry();
