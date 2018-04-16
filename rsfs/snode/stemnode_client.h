@@ -5,8 +5,8 @@
 //
 
 
-#ifndef RSFS_SNODE_SNODE_CLIENT_H
-#define RSFS_SNODE_SNODE_CLIENT_H
+#ifndef GUNIR_LEAF_STEMNODE_CLIENT_H
+#define GUNIR_LEAF_STEMNODE_CLIENT_H
 
 #include "trident/pbrpc.h"
 
@@ -51,13 +51,6 @@ public:
                                         (WriteDataRequest*, WriteDataResponse*,
                                          bool, int)>* done = NULL);
 
-
-    bool ReadData(const ReadDataRequest* request,
-                          ReadDataResponse* response,
-                          toft::Closure<void
-                                        (ReadDataRequest*, ReadDataResponse*,
-                                         bool, int)>* done = NULL);
-
 private:
     bool IsRetryStatus(const StatusCode& status);
 
@@ -68,4 +61,4 @@ private:
 } // namespace snode
 } // namespace rsfs
 
-#endif // RSFS_SNODE_SNODE_CLIENT_H
+#endif // GUNIR_LEAF_STEMNODE_CLIENT_H

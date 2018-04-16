@@ -5,7 +5,7 @@
 //
 
 
-#include "rsfs/snode/snode_impl.h"
+#include "rsfs/snode/stemnode_impl.h"
 
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
@@ -14,6 +14,7 @@
 #include "rsfs/master/master_client.h"
 #include "rsfs/proto/master_rpc.pb.h"
 #include "rsfs/proto/proto_helper.h"
+#include "rsfs/snode/worker_manager.h"
 #include "rsfs/types.h"
 
 
@@ -29,13 +30,17 @@ namespace snode {
 
 
 SNodeImpl::SNodeImpl(const SNodeInfo& node_info)
-    : m_status(kNotInited),
+    : m_server_info(node_info),
+      m_status(kNotInited),
       m_this_sequence_id(kSequenceIDStart),
       m_master_client(new master::MasterClient()),
       m_thread_pool(new toft::ThreadPool(FLAGS_rsfs_snode_thread_min_num,
                                          FLAGS_rsfs_snode_thread_max_num)) {
     master::MasterClient::SetThreadPool(m_thread_pool.get());
     master::MasterClient::SetOption();
+
+    m_worker_manager.reset(new WorkerManager(
+            m_server_info.slot_number(), &m_report_event));
 
     toft::Closure<void ()>* callback =
         toft::NewClosure(this, &SNodeImpl::TrigerReportByEvent);
@@ -59,7 +64,7 @@ bool SNodeImpl::Register() {
 
     m_this_sequence_id = kSequenceIDStart;
     request.set_sequence_id(m_this_sequence_id);
-//     request.mutable_server_info()->CopyFrom(m_server_info);
+    request.mutable_server_info()->CopyFrom(m_server_info);
 
     if (!m_master_client->Register(&request, &response, NULL)) {
         LOG(ERROR) << "Rpc failed: register, status = "
@@ -68,7 +73,7 @@ bool SNodeImpl::Register() {
     }
     if (response.status() == kMasterOk) {
         LOG(INFO) << "register success: " << response.ShortDebugString();
-//         m_server_info.set_status(kSNodeIsRunning);
+        m_server_info.set_status(kSNodeIsRunning);
         ++m_this_sequence_id;
         return true;
     }
@@ -81,14 +86,15 @@ bool SNodeImpl::Report() {
     LOG(INFO) << "report()";
     ReportRequest request;
     request.set_sequence_id(m_this_sequence_id);
-//     SNodeInfo* server_info = request.mutable_server_info();
-//     server_info->set_addr(m_server_info.addr());
-//     server_info->set_type(m_server_info.type());
+    SNodeInfo* server_info = request.mutable_server_info();
+    server_info->set_addr(m_server_info.addr());
+    server_info->set_type(m_server_info.type());
 
     int32_t retry = 0;
     while (retry < FLAGS_rsfs_heartbeat_retry_times) {
         ReportResponse response;
 
+        m_worker_manager->FillReportRequest(&request);
 
         if (!m_master_client->Report(&request, &response, NULL)) {
             LOG(ERROR) << "Rpc failed: report, status = "
@@ -103,6 +109,7 @@ bool SNodeImpl::Report() {
                 ++m_this_sequence_id;
             }
 
+            m_worker_manager->HandleReportResponse(response);
             return true;
         } else if (response.status() == kSNodeNotRegistered
                    || response.status() == kSNodeNotExist) {
@@ -129,13 +136,14 @@ void SNodeImpl::TrigerReportByEvent() {
 }
 
 bool SNodeImpl::IsIdle() {
-    return false;
+    return m_worker_manager->IsIdle();
 }
 
 bool SNodeImpl::OpenData(const OpenDataRequest* request,
                                  OpenDataResponse* response) {
     LOG(INFO) << "rpc (OpenData): " << request->ShortDebugString();
     response->set_sequence_id(request->sequence_id());
+    m_worker_manager->AddTask(request->inter_spec());
     response->set_status(kSNodeOk);
     return true;
 }
@@ -143,8 +151,13 @@ bool SNodeImpl::OpenData(const OpenDataRequest* request,
 bool SNodeImpl::CloseData(const CloseDataRequest* request,
                                     CloseDataResponse* response) {
     LOG(INFO) << "rpc (CloseData):"
-        << " sequence_id: "<< request->sequence_id();
+        << " sequence_id: "<< request->sequence_id()
+        << " task_info: " << request->task_info().ShortDebugString()
+        << " parent_task_info: "
+        << request->parent_task_info().ShortDebugString()
+        << " finished: " << request->finished();
     response->set_sequence_id(request->sequence_id());
+    m_worker_manager->CloseData(request, response);
     response->set_status(kSNodeOk);
     return true;
 }
@@ -153,14 +166,7 @@ bool SNodeImpl::WriteData(const WriteDataRequest* request,
                                     WriteDataResponse* response) {
     LOG(INFO) << "rpc (WriteData): " << request->ShortDebugString();
     response->set_sequence_id(request->sequence_id());
-    response->set_status(kSNodeOk);
-    return true;
-}
-
-bool SNodeImpl::ReadData(const ReadDataRequest* request,
-                                    ReadDataResponse* response) {
-    LOG(INFO) << "rpc (ReadData): " << request->ShortDebugString();
-    response->set_sequence_id(request->sequence_id());
+    m_worker_manager->WriteData(request, response);
     response->set_status(kSNodeOk);
     return true;
 }

@@ -57,16 +57,6 @@ bool SNodeClient::WriteData(const WriteDataRequest* request,
                                 m_rpc_timeout, m_thread_pool);
 }
 
-bool SNodeClient::ReadData(const ReadDataRequest* request,
-                                      ReadDataResponse* response,
-                                      toft::Closure<void (ReadDataRequest*,
-                                                          ReadDataResponse*,
-                                                          bool, int)>* done) {
-    return SendMessageWithRetry(&SNodeServer::Stub::ReadData,
-                                request, response, done, "ReadData",
-                                m_rpc_timeout, m_thread_pool);
-}
-
 bool SNodeClient::IsRetryStatus(const StatusCode& status) {
     return (status == kSNodeNotInited
             || status == kSNodeIsBusy);

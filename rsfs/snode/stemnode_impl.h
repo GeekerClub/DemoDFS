@@ -4,15 +4,15 @@
 // Description:
 //
 
-#ifndef RSFS_SNODE_SNODE_IMPL_H
-#define RSFS_SNODE_SNODE_IMPL_H
+#ifndef GUNIR_STEMNODE_STEMNODE_IMPL_H
+#define GUNIR_STEMNODE_STEMNODE_IMPL_H
 
 #include "toft/base/scoped_ptr.h"
 #include "toft/system/threading/event.h"
 #include "toft/system/threading/mutex.h"
 #include "toft/system/threading/thread_pool.h"
 
-#include "rsfs/proto/snode_info.pb.h"
+#include "rsfs/proto/server_info.pb.h"
 #include "rsfs/proto/snode_rpc.pb.h"
 #include "rsfs/proto/status_code.pb.h"
 
@@ -57,15 +57,16 @@ public:
     bool WriteData(const WriteDataRequest* request,
                           WriteDataResponse* response);
 
-    bool ReadData(const ReadDataRequest* request,
-                          ReadDataResponse* response);
     bool IsIdle();
 
 private:
     mutable toft::Mutex m_status_mutex;
 
+    SNodeInfo m_server_info;
     SNodeStatus m_status;
     uint64_t m_this_sequence_id;
+
+    toft::scoped_ptr<WorkerManager> m_worker_manager;
 
     toft::scoped_ptr<master::MasterClient> m_master_client;
     toft::scoped_ptr<toft::ThreadPool> m_thread_pool;
@@ -76,4 +77,4 @@ private:
 } // namespace snode
 } // namespace rsfs
 
-#endif // RSFS_SNODE_SNODE_IMPL_H
+#endif // GUNIR_STEMNODE_STEMNODE_IMPL_H

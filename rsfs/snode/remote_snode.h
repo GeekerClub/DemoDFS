@@ -8,7 +8,7 @@
 #define RSFS_SNODE_REMOTE_SNODE_H
 
 #include "toft/base/scoped_ptr.h"
-#include "toft/thread/thread_pool.h"
+#include "toft/system/threading/thread_pool.h"
 
 #include "rsfs/proto/snode_rpc.pb.h"
 
@@ -23,50 +23,51 @@ public:
     ~RemoteSNode();
 
     void OpenData(google::protobuf::RpcController* controller,
-                  const OpenDataRequest* request,
-                  OpenDataResponse* response,
-                  google::protobuf::Closure* done);
+                       const OpenDataRequest* request,
+                       OpenDataResponse* response,
+                       google::protobuf::Closure* done);
 
     void CloseData(google::protobuf::RpcController* controller,
-                  const CloseDataRequest* request,
-                  CloseDataResponse* response,
-                  google::protobuf::Closure* done);
+                          const CloseDataRequest* request,
+                          CloseDataResponse* response,
+                          google::protobuf::Closure* done);
 
     void WriteData(google::protobuf::RpcController* controller,
-                  const WriteDataRequest* request,
-                  WriteDataResponse* response,
-                  google::protobuf::Closure* done);
+                          const WriteDataRequest* request,
+                          WriteDataResponse* response,
+                          google::protobuf::Closure* done);
 
     void ReadData(google::protobuf::RpcController* controller,
-                  const ReadDataRequest* request,
-                  ReadDataResponse* response,
-                  google::protobuf::Closure* done);
+                          const ReadDataRequest* request,
+                          ReadDataResponse* response,
+                          google::protobuf::Closure* done);
 
 private:
     void DoOpenData(google::protobuf::RpcController* controller,
-                    const OpenDataRequest* request,
-                    OpenDataResponse* response,
-                    google::protobuf::Closure* done);
+                         const OpenDataRequest* request,
+                         OpenDataResponse* response,
+                         google::protobuf::Closure* done);
 
     void DoCloseData(google::protobuf::RpcController* controller,
-                    const CloseDataRequest* request,
-                    CloseDataResponse* response,
-                    google::protobuf::Closure* done);
+                            const CloseDataRequest* request,
+                            CloseDataResponse* response,
+                            google::protobuf::Closure* done);
 
     void DoWriteData(google::protobuf::RpcController* controller,
-                    const WriteDataRequest* request,
-                    WriteDataResponse* response,
-                    google::protobuf::Closure* done);
+                            const WriteDataRequest* request,
+                            WriteDataResponse* response,
+                            google::protobuf::Closure* done);
 
     void DoReadData(google::protobuf::RpcController* controller,
-                    const ReadDataRequest* request,
-                    ReadDataResponse* response,
-                    google::protobuf::Closure* done);
+                            const ReadDataRequest* request,
+                            ReadDataResponse* response,
+                            google::protobuf::Closure* done);
 
 private:
     SNodeImpl* m_snode_impl;
-    toft::scoped_ptr<ThreadPool> m_thread_pool;
+    toft::scoped_ptr<toft::ThreadPool> m_thread_pool;
 };
+
 
 } // namespace snode
 } // namespace rsfs

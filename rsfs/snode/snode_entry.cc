@@ -6,7 +6,7 @@
 #include "rsfs/snode/snode_entry.h"
 
 #include "toft/net/ip_address.h"
-#include "toft/thread/this_thread.h"
+#include "toft/system/threading/this_thread.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 
