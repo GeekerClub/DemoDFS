@@ -13,8 +13,8 @@
 #include "rsfs/proto/snode_rpc.pb.h"
 #include "rsfs/rpc_client.h"
 
-DECLARE_int32(rsfs_stemnode_connect_retry_period);
-DECLARE_int32(rsfs_stemnode_rpc_timeout_period);
+DECLARE_int32(rsfs_snode_connect_retry_period);
+DECLARE_int32(rsfs_snode_rpc_timeout_period);
 
 class toft::ThreadPool;
 
@@ -29,7 +29,7 @@ public:
                              int32_t pending_buffer_size, int32_t thread_num);
 
     SNodeClient(const std::string& addr = "",
-                   int32_t rpc_timeout = FLAGS_rsfs_stemnode_rpc_timeout_period);
+                   int32_t rpc_timeout = FLAGS_rsfs_snode_rpc_timeout_period);
 
     ~SNodeClient();
 
