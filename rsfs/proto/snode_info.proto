@@ -4,6 +4,7 @@ package rsfs;
 
 message SNodeInfo {
     required string addr = 1;
-    required StatusCode status = 2; 
+    required StatusCode status = 2;
+    optional string monitor_addr = 3;
 }
 

@@ -5,8 +5,8 @@
 //
 
 
-#ifndef GUNIR_RPC_CLIENT_H
-#define GUNIR_RPC_CLIENT_H
+#ifndef RSFS_RPC_CLIENT_H
+#define RSFS_RPC_CLIENT_H
 
 #include <string>
 
@@ -230,4 +230,4 @@ private:
 
 } // namespace rsfs
 
-#endif // GUNIR_RPC_CLIENT_H
+#endif // RSFS_RPC_CLIENT_H

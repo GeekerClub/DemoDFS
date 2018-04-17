@@ -3,8 +3,8 @@
 //
 // Description:
 
-#ifndef GUNIR_RPC_SERVER_H
-#define GUNIR_RPC_SERVER_H
+#ifndef RSFS_RPC_SERVER_H
+#define RSFS_RPC_SERVER_H
 
 #include <string>
 #include <google/protobuf/service.h>
@@ -82,4 +82,4 @@ private:
 
 } // namespace rsfs
 
-#endif // GUNIR_RPC_SERVER_H
+#endif // RSFS_RPC_SERVER_H
