@@ -7,8 +7,9 @@
 #ifndef RSFS_SDK_SDK_H
 #define RSFS_SDK_SDK_H
 
+#include <stdint.h>
+
 #include "toft/base/class_register.h"
-#include "toft/base/stdint.h"
 
 #include "rsfs/proto/meta_tree.pb.h"
 #include "rsfs/sdk/error_code.h"

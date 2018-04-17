@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 #include "toft/base/scoped_ptr.h"
-#include "toft/file/file_stream.h"
+#include "toft/storage/file/file.h"
 
 namespace rsfs {
 namespace sdk {
@@ -52,7 +52,7 @@ protected:
     void StatToTreeNode(const struct stat& st, TreeNode* tn);
 
 private:
-    toft::scoped_ptr<FileStream> m_file_stream;
+    toft::scoped_ptr<toft::File> m_file_stream;
     std::string m_file_path;
 };
 
