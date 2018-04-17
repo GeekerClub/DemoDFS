@@ -5,10 +5,10 @@
 
 #include "rsfs/sdk/sdk.h"
 
-#include "common/base/scoped_ptr.h"
-#include "common/base/string_ext.h"
-#include "common/collection/rscode/rscode.h"
-#include "common/file/file_path.h"
+#include "toft/base/scoped_ptr.h"
+#include "toft/base/string_ext.h"
+#include "toft/collection/rscode/rscode.h"
+#include "toft/file/file_path.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 
@@ -59,9 +59,9 @@ bool SDK::IsExist(const std::string& full_path, ErrorCode* err) {
 
 bool SDK::Copy(const std::string& src_path, const std::string& dst_path) {
     ErrorCode err;
-    scoped_ptr<SDK> src_file(Open(src_path, "r", &err));
+    toft::scoped_ptr<SDK> src_file(Open(src_path, "r", &err));
     CHECK(src_file.get() != NULL);
-    scoped_ptr<SDK> dst_file(Open(dst_path, "w", &err));
+    toft::scoped_ptr<SDK> dst_file(Open(dst_path, "w", &err));
     CHECK(dst_file.get() != NULL);
 
     const uint32_t BUFFER_SIZE = FLAGS_rsfs_sdk_rscode_block_size;
@@ -109,7 +109,7 @@ bool SDK::Remove(const std::string& full_path, bool is_recusive,
 
 bool SDK::List(const std::string& full_path, std::vector<TreeNode>* list,
                ErrorCode* err) {
-    scoped_ptr<SDK> sdk_impl(CreateSDKImpl(GetPathPrefix(full_path)));
+    toft::scoped_ptr<SDK> sdk_impl(CreateSDKImpl(GetPathPrefix(full_path)));
     std::string last_one;
     return Listx(sdk_impl.get(), full_path + "#", full_path + "~", &last_one, list,
                  err);

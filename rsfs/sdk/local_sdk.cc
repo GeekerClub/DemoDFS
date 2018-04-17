@@ -6,9 +6,9 @@
 
 #include "rsfs/sdk/local_sdk.h"
 
-#include "common/base/string_ext.h"
-#include "common/file/file_path.h"
-#include "common/file/file_types.h"
+#include "toft/base/string_ext.h"
+#include "toft/file/file_path.h"
+#include "toft/file/file_types.h"
 #include "thirdparty/glog/logging.h"
 
 namespace rsfs {

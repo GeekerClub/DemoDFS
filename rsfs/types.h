@@ -3,8 +3,8 @@
 //
 // Description:
 
-#ifndef GUNIR_TYPES_H
-#define GUNIR_TYPES_H
+#ifndef RSFS_TYPES_H
+#define RSFS_TYPES_H
 
 #include <stdint.h>
 
@@ -27,4 +27,4 @@ const uint32_t kMaxLevel = UINT32_MAX;
 
 } // namespace rsfs
 
-#endif // GUNIR_TYPES_H
+#endif // RSFS_TYPES_H

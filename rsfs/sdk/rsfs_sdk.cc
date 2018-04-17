@@ -438,7 +438,7 @@ bool RsfsSDK::GetSliceLocation(int64_t offset, uint32_t* slice_start_block,
 
 bool RsfsSDK::PallelOpenDataFile() {
     AutoResetEvent done_event;
-    scoped_ptr<utils::IntMap> open_status(new utils::IntMap(m_node_list.size(), -1));
+    toft::scoped_ptr<utils::IntMap> open_status(new utils::IntMap(m_node_list.size(), -1));
     for (uint32_t i = 0; i < m_node_list.size(); ++i) {
         Closure<void>* callback =
             NewClosure(this, &RsfsSDK::OpenDataFile,
@@ -522,7 +522,7 @@ void RsfsSDK::OpenDataFileCallback(std::string addr, uint32_t block_no, utils::I
 
 bool RsfsSDK::PallelCloseDataFile() {
     AutoResetEvent done_event;
-    scoped_ptr<utils::IntMap> close_status(new utils::IntMap(m_node_list.size(), -1));
+    toft::scoped_ptr<utils::IntMap> close_status(new utils::IntMap(m_node_list.size(), -1));
     for (uint32_t i = 0; i < m_node_list.size(); ++i) {
         Closure<void>* callback =
             NewClosure(this, &RsfsSDK::CloseDataFile,
@@ -602,7 +602,7 @@ bool RsfsSDK::ParallelLoadSlice(uint32_t slice_no) {
     m_rscode->CleanCache();
     m_rscode->CleanBlock();
     AutoResetEvent wait_event;
-    scoped_ptr<utils::IntMap> load_status(new utils::IntMap(m_rscode->GetMK(), -1));
+    toft::scoped_ptr<utils::IntMap> load_status(new utils::IntMap(m_rscode->GetMK(), -1));
     for (uint32_t i = 0; i < m_rscode->GetMK(); ++i) {
         uint32_t load_node_no = i % m_node_list.size();
         Closure<void>* callback =
@@ -746,7 +746,7 @@ void RsfsSDK::HandleTailBlocks() {
 
 bool RsfsSDK::ParallelDumpTailBlock(uint32_t start_node_no) {
     AutoResetEvent wait_event;
-    scoped_ptr<utils::IntMap> dump_status(new utils::IntMap(m_node_list.size(), -1));
+    toft::scoped_ptr<utils::IntMap> dump_status(new utils::IntMap(m_node_list.size(), -1));
     for (uint32_t i = 0; i < m_cur_rsblock_no; ++i) {
         uint32_t dump_node_no = (start_node_no + i) % m_node_list.size();
         Closure<void>* callback =
@@ -842,7 +842,7 @@ bool RsfsSDK::ParallelLoadTail(uint32_t slice_no) {
 
 bool RsfsSDK::ParallelLoadTailBlock(uint32_t start_no) {
     AutoResetEvent wait_event;
-    scoped_ptr<utils::IntMap> load_status(new utils::IntMap(m_rscode->GetMK(), -1));
+    toft::scoped_ptr<utils::IntMap> load_status(new utils::IntMap(m_rscode->GetMK(), -1));
     for (uint32_t i = 0; i < m_tail_num; ++i) {
         uint32_t load_node_no = (start_no + i) % m_node_list.size();
         Closure<void>* callback =

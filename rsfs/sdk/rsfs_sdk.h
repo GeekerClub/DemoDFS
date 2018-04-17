@@ -9,12 +9,12 @@
 
 #include <string>
 
-#include "common/base/closure.h"
-#include "common/base/scoped_ptr.h"
-#include "common/base/stdint.h"
-#include "common/collection/rscode/rscode.h"
-#include "common/lock/event.h"
-#include "common/lock/mutex.h"
+#include "toft/base/closure.h"
+#include "toft/base/scoped_ptr.h"
+#include "toft/base/stdint.h"
+#include "toft/collection/rscode/rscode.h"
+#include "toft/system/threading/event.h"
+#include "toft/system/threading/mutex.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 
@@ -132,8 +132,8 @@ private:
                           bool failed, int error_code);
 
 private:
-    scoped_ptr<master::MasterClient> m_master_client;
-    scoped_ptr<rscode::RSCode> m_rscode;
+    toft::scoped_ptr<master::MasterClient> m_master_client;
+    toft::scoped_ptr<rscode::RSCode> m_rscode;
 
     uint64_t m_last_sequence_id;
     uint32_t m_cur_node_no;

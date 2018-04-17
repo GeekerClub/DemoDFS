@@ -13,10 +13,10 @@
 #include <string>
 #include <vector>
 
-#include "common/base/scoped_ptr.h"
-#include "common/base/string_ext.h"
-#include "common/base/string_number.h"
-#include "common/file/file_path.h"
+#include "toft/base/scoped_ptr.h"
+#include "toft/base/string_ext.h"
+#include "toft/base/string_number.h"
+#include "toft/file/file_path.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
 #include "version.h"
@@ -83,7 +83,7 @@ int32_t ListOp(int32_t argc, char** argv) {
     }
     std::string file_path = argv[2];
     std::vector<rsfs::TreeNode> node_list;
-    scoped_ptr<rsfs::sdk::SDK>
+    toft::scoped_ptr<rsfs::sdk::SDK>
         rsfs(rsfs::sdk::SDK::CreateSDKImpl(GetPathPrefix(file_path)));
     std::string path_start = file_path + "#";
     std::string path_end = file_path + "~";
