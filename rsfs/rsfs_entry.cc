@@ -9,24 +9,24 @@
 
 namespace rsfs {
 
-GunirEntry::GunirEntry()
+RsfsEntry::RsfsEntry()
     : m_started(false) {}
 
-GunirEntry::~GunirEntry() {}
+RsfsEntry::~RsfsEntry() {}
 
-bool GunirEntry::Start() {
+bool RsfsEntry::Start() {
     if (ShouldStart()) {
         return StartServer();
     }
     return false;
 }
 
-bool GunirEntry::Run() {
+bool RsfsEntry::Run() {
     toft::ThisThread::Sleep(2000);
     return true;
 }
 
-bool GunirEntry::Shutdown() {
+bool RsfsEntry::Shutdown() {
     if (ShouldShutdown()) {
         ShutdownServer();
         return true;
@@ -34,7 +34,7 @@ bool GunirEntry::Shutdown() {
     return false;
 }
 
-bool GunirEntry::ShouldStart() {
+bool RsfsEntry::ShouldStart() {
     toft::Mutex::Locker lock(&m_mutex);
     if (m_started) {
         return false;
@@ -43,7 +43,7 @@ bool GunirEntry::ShouldStart() {
     return true;
 }
 
-bool GunirEntry::ShouldShutdown() {
+bool RsfsEntry::ShouldShutdown() {
     toft::Mutex::Locker lock(&m_mutex);
     if (!m_started) {
         return false;

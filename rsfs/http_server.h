@@ -3,8 +3,8 @@
 //
 // Description:
 
-#ifndef GUNIR_HTTP_SERVER_H
-#define GUNIR_HTTP_SERVER_H
+#ifndef RSFS_HTTP_SERVER_H
+#define RSFS_HTTP_SERVER_H
 
 #include <map>
 #include <string>
@@ -72,4 +72,4 @@ private:
 
 }  // namespace rsfs
 
-#endif  // GUNIR_HTTP_SERVER_H
+#endif  // RSFS_HTTP_SERVER_H

@@ -34,8 +34,10 @@ cc_library(
     srcs = 'snode_entry.cc',
     deps = [
         ':snode_impl',
+        ':remote_snode',
         '//rsfs/utils:memory_tool',
         '//rsfs/utils:utils_cmd',
         '//rsfs:rsfs_entry',
+        '//rsfs:rsfs_flags'
     ]
 )

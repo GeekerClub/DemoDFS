@@ -64,6 +64,7 @@ cc_library(
     srcs = 'master_entry.cc',
     deps = [
         ':master_impl',
+        ':remote_master',
         '//rsfs/utils:memory_tool',
         '//rsfs/utils:utils_cmd',
         '//rsfs:rsfs_entry',

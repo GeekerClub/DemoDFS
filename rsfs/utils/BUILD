@@ -7,6 +7,7 @@ cc_library(
     deps = [
         '//toft/base/string:string',
         '//toft/storage/path:path',
+        '#crypto'
     ]
 )
 

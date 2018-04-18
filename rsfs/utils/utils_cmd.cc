@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "toft/base/string/string_format.h"
+#include "toft/base/string/format.h"
 #include "toft/storage/path/path_ext.h"
 #include "thirdparty/gflags/gflags.h"
 #include "thirdparty/glog/logging.h"
@@ -91,9 +91,9 @@ std::string ConvertByteToString(const uint64_t size) {
     }
 
     if ((int)min_size - min_size == 0) {
-        return toft::StringFormat("%d%s", (int)min_size, hight_unit.c_str());
+        return toft::StringPrint("%d%s", (int)min_size, hight_unit.c_str());
     } else {
-        return toft::StringFormat("%.2f%s", min_size, hight_unit.c_str());
+        return toft::StringPrint("%.2f%s", min_size, hight_unit.c_str());
     }
 }
 

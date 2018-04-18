@@ -52,11 +52,12 @@ cc_binary(
         '//rsfs/utils:utils_cmd',
         '//rsfs:rsfs_flags',
         '//rsfs:rsfs_counters',
+        '//toft/base:binary_version',
         '//thirdparty/gflags:gflags',
         '//thirdparty/glog:glog',
-        '//toft/storage/file:afs_fs',
+#         '//toft/storage/file:afs_fs',
         '//toft/storage/file:file',
-        '//toft/storage/file:hdfs_fs'
+#         '//toft/storage/file:hdfs_fs'
     ]
 )
 

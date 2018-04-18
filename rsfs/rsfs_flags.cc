@@ -86,50 +86,16 @@ DEFINE_int64(rsfs_ip_condition_window, 4 * 1000, "");
 DEFINE_double(rsfs_leaf_long_tail_start_percent, 0.8, "long tail inflection point");
 
 
-//////////  leaf node //////////
-DEFINE_string(rsfs_leafnode_addr, "127.0.0.1", "");
-DEFINE_string(rsfs_leafnode_port, "10000", "");
-DEFINE_string(rsfs_leafnode_monitor_port, "8310", "");
+//////////  snode //////////
+DEFINE_string(rsfs_snode_addr, "127.0.0.1", "");
+DEFINE_string(rsfs_snode_port, "10000", "");
+DEFINE_string(rsfs_snode_monitor_port, "8210", "");
 
-DEFINE_int32(rsfs_leafnode_connect_retry_period, 1000, "");
-DEFINE_int32(rsfs_leafnode_rpc_timeout_period, 5000, "");
-DEFINE_int32(rsfs_leafnode_thread_min_num, 1, "");
-DEFINE_int32(rsfs_leafnode_thread_max_num, 10, "");
+DEFINE_int32(rsfs_snode_connect_retry_period, 1000, "");
+DEFINE_int32(rsfs_snode_rpc_timeout_period, 5000, "");
+DEFINE_int32(rsfs_snode_thread_min_num, 1, "");
+DEFINE_int32(rsfs_snode_thread_max_num, 10, "");
 
-DEFINE_int32(rsfs_leafnode_send_package_size, 1024 * 1024, "limit for pb message");
-DEFINE_int64(rsfs_leafnode_result_memory_limit, 64 * 1024 * 1024, "");
+DEFINE_int64(rsfs_snode_result_memory_limit, 1024 * 1024 * 1024, "");
+DEFINE_int32(rsfs_snode_worker_thread_num, 5, "");
 
-DEFINE_int64(rsfs_leafnode_container_memory_limit, 500 * 1024 * 1024, "");
-
-DEFINE_int32(rsfs_leafnode_worker_thread_num, 5, "");
-DEFINE_int32(rsfs_leafnode_sender_thread_num, 5, "");
-DEFINE_int32(rsfs_leafnode_per_thread_slot_num, 10, "");
-
-//////////  stem node //////////
-DEFINE_string(rsfs_stemnode_addr, "127.0.0.1", "");
-DEFINE_string(rsfs_stemnode_port, "10000", "");
-DEFINE_string(rsfs_stemnode_monitor_port, "8210", "");
-
-DEFINE_int32(rsfs_stemnode_connect_retry_period, 1000, "");
-DEFINE_int32(rsfs_stemnode_rpc_timeout_period, 5000, "");
-DEFINE_int32(rsfs_stemnode_thread_min_num, 1, "");
-DEFINE_int32(rsfs_stemnode_thread_max_num, 10, "");
-
-DEFINE_int64(rsfs_stemnode_result_memory_limit, 1024 * 1024 * 1024, "");
-DEFINE_int32(rsfs_stemnode_worker_thread_num, 5, "");
-
-//////////  client  /////////////
-DEFINE_double(rsfs_job_precision, 1.0, "");
-DEFINE_double(rsfs_data_precision, 1.0, "");
-DEFINE_string(rsfs_user_defined_table_conf, "./user_defined.conf", "");
-DEFINE_string(rsfs_display_type, "table", "table/debug");
-DEFINE_string(rsfs_client_mode, "shell", "shell/server");
-DEFINE_string(rsfs_client_addr, "127.0.0.1", "");
-DEFINE_string(rsfs_client_port, "10000", "");
-DEFINE_string(rsfs_client_monitor_port, "8010", "");
-DEFINE_uint64(rsfs_client_json_line_limit, 10000,
-    "limit line number for json output");
-DEFINE_string(rsfs_client_table_conf_separator, "##",
-    "[table_name]##[table_path]##[expired_date]");
-DEFINE_string(rsfs_client_tablet_name_separator, ".",
-    "[table_name].[expired_date].[sequence_number]");
