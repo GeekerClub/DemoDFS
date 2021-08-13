@@ -42,6 +42,10 @@ is: protoc:
 Above command will build the protobuf compiler and copy
 it to $PATH.
 
+Sometimes, you may need to install some requirements:
+
+   $ apt-get install zlib1g-dev libssl-dev 
+
 3. Build the codes for demo system
 ----------------------------------
 
